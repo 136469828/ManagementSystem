@@ -7,7 +7,8 @@
 //
 
 #import "AppDelegate.h"
-
+#import "RootTabbarController.h"
+#import "LoginViewController.h"
 @interface AppDelegate ()
 
 @end
@@ -17,6 +18,14 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window.backgroundColor = [UIColor whiteColor];
+//    RootTabbarController *tabbatCtl = [[RootTabbarController alloc] init];
+        LoginViewController *tabbatCtl = [[LoginViewController alloc] init];
+//    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:tabbatCtl];
+    self.window.rootViewController = tabbatCtl;
+    [self.window makeKeyAndVisible];
+
     return YES;
 }
 
