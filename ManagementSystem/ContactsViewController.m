@@ -8,6 +8,7 @@
 
 #import "ContactsViewController.h"
 #import "ContactsTableViewCell.h"
+#import "AddLinkmanViewController.h"
 @interface ContactsViewController ()<UIActionSheetDelegate>
 {
     NSString *nameStr;
@@ -19,6 +20,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    UIBarButtonItem *rBtn = [[UIBarButtonItem alloc] initWithTitle:@"添加" style:UIBarButtonItemStylePlain target:self action:@selector(pushAddVC)];
+    self.navigationItem.rightBarButtonItem = rBtn;
+    
     [self setTableView];
     [self registerNib];
 }
@@ -142,6 +146,11 @@
 - (void)seachOn{
     NSLog(@"clickOn");
 }
-
+- (void)pushAddVC
+{
+    AddLinkmanViewController *addLinkManVC = [[AddLinkmanViewController alloc] init];
+    addLinkManVC.title = @"添加常用联系人";
+    [self.navigationController pushViewController:addLinkManVC animated:YES];
+}
 
 @end

@@ -7,16 +7,27 @@
 //
 
 #import "PasswordViewController.h"
-
-@interface PasswordViewController ()
+#import "ForgetViewController.h"
+#import "NetManger.h"
+@interface PasswordViewController ()<UITextFieldDelegate>
 
 @end
 
 @implementation PasswordViewController
-
+// 销毁通知中心
+- (void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    self.theNewPassword.delegate = self;
+    self.theNewPassword.secureTextEntry = YES;
+
+    self.theOldPassword.delegate = self;
+    self.theOldPassword.secureTextEntry = YES;
+    [self.btn addTarget:self action:@selector(updatepassword) forControlEvents:UIControlEventTouchDown];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -33,5 +44,31 @@
     // Pass the selected object to the new view controller.
 }
 */
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField
+{
+    NSLog(@"textField.tex %@",textField.text);
+    return YES;
+}
+- (IBAction)fogetPasswordAction:(UIButton *)sender
+{
+    ForgetViewController *forgetVC = [[ForgetViewController alloc] init];
+    [self.navigationController pushViewController:forgetVC animated:YES];
+}
+- (void)updatepassword
+{
+    NetManger *manger = [NetManger shareInstance];
+    manger.oldPword = self.theOldPassword.text;
+    manger.passwordOfnew = self.theNewPassword.text;
+    [manger loadData:RequestOfUpdatepassword];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showUpdatepassword:) name:@"updatepassword" object:nil];
+    
+}
+- (void)showUpdatepassword:(NSNotification*)theObj
+{
+    UIAlertView *al = [[UIAlertView alloc] initWithTitle:@"提示" message:theObj.object[@"msg"] delegate:self cancelButtonTitle:@"确认" otherButtonTitles:nil, nil];
+    [al show];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 @end

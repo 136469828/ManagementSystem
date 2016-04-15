@@ -96,8 +96,11 @@ typedef enum
 @property (nonatomic, copy) NSString *code;
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, copy) NSString *password;
-
-
+@property (nonatomic, copy) NSString *userID_Code;
+@property (nonatomic, copy) NSString *versionName;
+@property (nonatomic, copy) NSString *oldPword;
+@property (nonatomic, copy) NSString *passwordOfnew;
+@property (nonatomic, strong) NSMutableArray *m_details;
 + (instancetype)shareInstance;
 - (void)loadData:(RequestState)requet;
 @end

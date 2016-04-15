@@ -22,7 +22,10 @@
 @end
 
 @implementation LoginViewController
-
+// 销毁通知中心
+- (void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
@@ -40,9 +43,12 @@
     self.loginBtn.layer.cornerRadius = 15;
     self.passWordTF.secureTextEntry = YES;
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(test:) name:NetManagerRefreshNotify object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loging:) name:NetManagerRefreshNotify object:nil];
 }
-
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -67,32 +73,25 @@
     manger.name = self.userNameTF.text; manger.password = self.passWordTF.text;
     [manger loadData:RequestOfLogin];
 
-
 //    RootTabbarController *rootTabbarCtr = [[RootTabbarController alloc] init];
 //    [self presentViewController:rootTabbarCtr animated:YES completion:nil];
-
-
-    
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
     [self.view endEditing:YES];
 }
 #pragma mark - 判断账号密码
-- (void)test:(NSNotification*)theObj
+- (void)loging:(NSNotification*)theObj
 {
-    NSLog(@"%@",theObj.object);
-    id dic = theObj;
-    NSLog(@"%@",dic[@"code"]);
-    
-    if ([self.passWordTF.text isEqualToString:@"123456"] && [self.userNameTF.text isEqualToString:@"test"])
+//    NSLog(@"%@ %@",theObj.object[@"code"],theObj.object[@"msg"]);
+    if ([theObj.object[@"msg"] isEqualToString:@"success"])
     {
         RootTabbarController *rootTabbarCtr = [[RootTabbarController alloc] init];
         [self presentViewController:rootTabbarCtr animated:YES completion:nil];
     }
     else
     {
-        UIAlertView *al = [[UIAlertView alloc] initWithTitle:@"提示" message:@"账号或密码错误" delegate:self cancelButtonTitle:@"确认" otherButtonTitles:nil, nil];
+        UIAlertView *al = [[UIAlertView alloc] initWithTitle:@"提示" message:theObj.object[@"msg"] delegate:self cancelButtonTitle:@"确认" otherButtonTitles:nil, nil];
         [al show];
     }
 }

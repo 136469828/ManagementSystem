@@ -48,6 +48,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     switch (indexPath.section) {
         case 0:
@@ -77,6 +78,7 @@
         case 0:
         {
             PasswordViewController *pwVC = [[PasswordViewController alloc] init];
+            pwVC.title = @"修改密码";
             [self.navigationController pushViewController:pwVC animated:YES];
         }
             break;
@@ -89,6 +91,7 @@
         case 2:
         {
              AboutMeViewController *abVC = [[AboutMeViewController alloc] init];
+            abVC.title = @"关于我们";
             [self.navigationController pushViewController:abVC animated:YES];
         }
             break;

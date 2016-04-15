@@ -7,7 +7,8 @@
 //
 
 #import "DetailsViewController.h"
-
+#import "NetManger.h"
+#import "ProjectModel.h"
 @interface DetailsViewController ()
 {
     NSArray *dataArr;
@@ -46,7 +47,14 @@
                  ,@"正常"
                  ,@"私企"
                  ,@"审核未通过"];
+    NetManger *manger = [NetManger shareInstance];
+    [manger loadData:RequestOfGetprojectt];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadData) name:@"Getproject" object:nil];
     [self setTableView];
+}
+- (void)reloadData
+{
+    [self.tableView reloadData];
 }
 - (void)setTableView{
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight - 69) style:UITableViewStyleGrouped];
@@ -85,7 +93,24 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
         cell.textLabel.text = self.titleArr[indexPath.row];
         UILabel *contentL = [[UILabel alloc] initWithFrame:CGRectMake(ScreenWidth/3, 2, ScreenWidth - ScreenWidth/3 - 10, 40)];
-        contentL.text = dataArr[indexPath.row];
+        NetManger *manger = [NetManger shareInstance];
+        if (manger.m_details.count == 0) {
+            contentL.text = dataArr[indexPath.row];
+        }
+        else
+        {
+            NSMutableArray *m_dataArr = [[NSMutableArray alloc] initWithCapacity:0];
+            for (int i = 0; i<13; i++)
+            {
+                ProjectModel *mode = manger.m_details[i];
+                [m_dataArr addObject:mode];
+            }
+//            ProjectModel *model = manger.m_details[indexPath.row];
+            contentL.text = m_dataArr[indexPath.row];
+            NSLog(@"%@",contentL.text);
+        }
+        
+//        contentL.text = dataArr[indexPath.row];
         contentL.font = [UIFont systemFontOfSize:15];
         [cell.contentView addSubview:contentL];
         if (indexPath.row == 11) {

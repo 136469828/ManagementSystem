@@ -162,6 +162,11 @@
 		84B9FE361CBC966400AA5DD4 /* UIImageView+HighlightedWebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B9FE241CBC966400AA5DD4 /* UIImageView+HighlightedWebCache.m */; };
 		84B9FE371CBC966400AA5DD4 /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B9FE261CBC966400AA5DD4 /* UIImageView+WebCache.m */; };
 		84B9FE381CBC966400AA5DD4 /* UIView+WebCacheOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B9FE281CBC966400AA5DD4 /* UIView+WebCacheOperation.m */; };
+		84FC33441CC0DA9000FADFC4 /* ForgetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FC33421CC0DA9000FADFC4 /* ForgetViewController.m */; };
+		84FC33451CC0DA9000FADFC4 /* ForgetViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84FC33431CC0DA9000FADFC4 /* ForgetViewController.xib */; };
+		84FC33491CC0DD9600FADFC4 /* AddLinkmanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FC33471CC0DD9600FADFC4 /* AddLinkmanViewController.m */; };
+		84FC334A1CC0DD9600FADFC4 /* AddLinkmanViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84FC33481CC0DD9600FADFC4 /* AddLinkmanViewController.xib */; };
+		84FC334D1CC0E22100FADFC4 /* ProjectModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FC334C1CC0E22100FADFC4 /* ProjectModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -421,6 +426,14 @@
 		84B9FE261CBC966400AA5DD4 /* UIImageView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+WebCache.m"; sourceTree = "<group>"; };
 		84B9FE271CBC966400AA5DD4 /* UIView+WebCacheOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WebCacheOperation.h"; sourceTree = "<group>"; };
 		84B9FE281CBC966400AA5DD4 /* UIView+WebCacheOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WebCacheOperation.m"; sourceTree = "<group>"; };
+		84FC33411CC0DA9000FADFC4 /* ForgetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForgetViewController.h; sourceTree = "<group>"; };
+		84FC33421CC0DA9000FADFC4 /* ForgetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForgetViewController.m; sourceTree = "<group>"; };
+		84FC33431CC0DA9000FADFC4 /* ForgetViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ForgetViewController.xib; sourceTree = "<group>"; };
+		84FC33461CC0DD9600FADFC4 /* AddLinkmanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddLinkmanViewController.h; sourceTree = "<group>"; };
+		84FC33471CC0DD9600FADFC4 /* AddLinkmanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddLinkmanViewController.m; sourceTree = "<group>"; };
+		84FC33481CC0DD9600FADFC4 /* AddLinkmanViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddLinkmanViewController.xib; sourceTree = "<group>"; };
+		84FC334B1CC0E22100FADFC4 /* ProjectModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectModel.h; sourceTree = "<group>"; };
+		84FC334C1CC0E22100FADFC4 /* ProjectModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -471,6 +484,9 @@
 				8438AE071CA4C83D00F86068 /* PasswordViewController.h */,
 				8438AE081CA4C83D00F86068 /* PasswordViewController.m */,
 				8438AE091CA4C83D00F86068 /* PasswordViewController.xib */,
+				84FC33411CC0DA9000FADFC4 /* ForgetViewController.h */,
+				84FC33421CC0DA9000FADFC4 /* ForgetViewController.m */,
+				84FC33431CC0DA9000FADFC4 /* ForgetViewController.xib */,
 			);
 			name = "设置";
 			sourceTree = "<group>";
@@ -810,6 +826,9 @@
 				6F8EA7631C914D1900D5C649 /* ContactsViewController.h */,
 				6F8EA7641C914D1900D5C649 /* ContactsViewController.m */,
 				6F8EA7651C914D1900D5C649 /* ContactsViewController.xib */,
+				84FC33461CC0DD9600FADFC4 /* AddLinkmanViewController.h */,
+				84FC33471CC0DD9600FADFC4 /* AddLinkmanViewController.m */,
+				84FC33481CC0DD9600FADFC4 /* AddLinkmanViewController.xib */,
 			);
 			name = ctr;
 			sourceTree = "<group>";
@@ -926,6 +945,8 @@
 				6FFC6E821C927FE8007E1BB0 /* tool */,
 				6F8B90DA1C91773F007FA138 /* ctr */,
 				6F8B90DB1C917748007FA138 /* view */,
+				84FC334B1CC0E22100FADFC4 /* ProjectModel.h */,
+				84FC334C1CC0E22100FADFC4 /* ProjectModel.m */,
 			);
 			name = "项目查询";
 			sourceTree = "<group>";
@@ -1205,6 +1226,7 @@
 				6F4ABEA01C81A74E0025DAAF /* HomeViewController.xib in Resources */,
 				6F0E10551C93F3BF00890AF9 /* logo_test.png in Resources */,
 				6F4ABF391C81A9E30025DAAF /* NormalViewController.xib in Resources */,
+				84FC33451CC0DA9000FADFC4 /* ForgetViewController.xib in Resources */,
 				6F8EA75C1C91467300D5C649 /* home_chaxun.jpg in Resources */,
 				6F58F9541C841B3B000E45E5 /* addtixing.png in Resources */,
 				848659221CA660E900D5824A /* home_lianxiren.png in Resources */,
@@ -1213,6 +1235,7 @@
 				6F6D3A6D1C843F1800E2A032 /* PhotoTableViewCell.xib in Resources */,
 				8486591E1CA6609500D5824A /* home_qunfa.png in Resources */,
 				6F8EA7431C91226700D5C649 /* btn_unselected@2x.png in Resources */,
+				84FC334A1CC0DD9600FADFC4 /* AddLinkmanViewController.xib in Resources */,
 				84B9FD391CB4F77300AA5DD4 /* 123.png in Resources */,
 				6F1A3F221C92A10300B77890 /* RecordTableViewCell.xib in Resources */,
 				6F9099F51C9257F30094E0B4 /* progess_refuse.png in Resources */,
@@ -1288,6 +1311,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6F8EA73C1C91226700D5C649 /* ZLPhotoBrowserCell.m in Sources */,
+				84FC33491CC0DD9600FADFC4 /* AddLinkmanViewController.m in Sources */,
 				6F58F9511C8419A2000E45E5 /* SettingCell.m in Sources */,
 				6F8EA7931C916B8B00D5C649 /* ProjectSeachTableViewCell.m in Sources */,
 				6F9099F11C92561D0094E0B4 /* CommentTableViewCell.m in Sources */,
@@ -1302,6 +1326,7 @@
 				84B9FDE81CBC960300AA5DD4 /* NetManger.m in Sources */,
 				6F4ABF3B1C81A9E30025DAAF /* SeachViewController.m in Sources */,
 				84B9FE341CBC966400AA5DD4 /* UIImage+MultiFormat.m in Sources */,
+				84FC33441CC0DA9000FADFC4 /* ForgetViewController.m in Sources */,
 				6F8B90E41C917FDD007FA138 /* ProgressTableViewCell.m in Sources */,
 				6F8EA7751C9152E600D5C649 /* MassTableViewCell.m in Sources */,
 				84B9FE2A1CBC966400AA5DD4 /* NSData+ImageContentType.m in Sources */,
@@ -1354,6 +1379,7 @@
 				6F8EA7701C91529D00D5C649 /* MassViewController.m in Sources */,
 				6F9099EB1C9252050094E0B4 /* NSBKeyframeAnimationFunctions.c in Sources */,
 				6F58F8F71C841506000E45E5 /* ProjectSrachViewController.m in Sources */,
+				84FC334D1CC0E22100FADFC4 /* ProjectModel.m in Sources */,
 				6FFC6E871C9293BE007E1BB0 /* DetailsViewController.m in Sources */,
 				6F8EA73A1C91226700D5C649 /* ZLCollectionCell.m in Sources */,
 				84B9FE311CBC966400AA5DD4 /* SDWebImagePrefetcher.m in Sources */,

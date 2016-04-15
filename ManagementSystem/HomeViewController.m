@@ -45,7 +45,6 @@
     self.title = @"欢迎使用莆田北岸发改局管理系统";
     // Do any additional setup after loading the view from its nib.
     NSArray *titles = @[@"公告", @"提醒信息", @"项目查询", @"上报项目", @"我的项目", @"审批项目", @"群发消息", @"常用联系人",@"设置"];
-    self.title = @"欢迎使用莆田发改委管理系统";
     NSArray *imageNames = @[@"home_gonggao",@"home_tixin",@"home_chaxun.jpg",@"home_shangbao",@"home_wodexiangmu",@"home_shenpi",@"home_qunfa",@"home_lianxiren",@"home_setting"];
     [self drawHoneViewWithAppviewW:ScreenWidth/3 AppviewH:100 Totalloc:3 Count:9 ImageArray:imageNames TitleArray:titles];
     [self _initAnnouncementView];

@@ -8,6 +8,7 @@
 
 #import "NetManger.h"
 #import "AFNetworking.h"
+#import "ProjectModel.h"
 NSString *NetManagerRefreshNotify = @"NetManagerRefreshNotify";
 static NetManger *manger = nil;
 @implementation NetManger
@@ -75,7 +76,7 @@ static NetManger *manger = nil;
             break;
         case RequestOfUpdatepassword:
         {
-            [self accountUpdatepassword];
+            [self accountUpdatepasswordWithOldPassword:self.oldPword AndNewPassword:self.passwordOfnew];
         }
             break;
         case RequestOfResetpassword:
@@ -156,7 +157,7 @@ static NetManger *manger = nil;
     AFHTTPRequestOperationManager *manger = [AFHTTPRequestOperationManager manager];
     NSDictionary *parameters = @{
                                  @"_appid":@"101",
-                                 @"_code":@"bf1ced86a7ab4efbbb0f310f99f0097a",
+                                 @"_code":self.userID_Code,
                                  @"content":@"application/json",
                                  @"Keyword": @"sample string 1",
                                  @"PageIndex": @"2",
@@ -166,9 +167,7 @@ static NetManger *manger = nil;
     NSString *url = [NSString stringWithFormat:@"%@common/article/getarticlelist",ServerAddressURL];
     [manger POST:url parameters:parameters success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject)
      {
-         
-         NSLog(@"%@",responseObject);
-
+         NSLog(@"No documentation available：%@",responseObject[@"data"]);
          
      } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
          NSLog(@"error : %@",error);
@@ -181,12 +180,12 @@ static NetManger *manger = nil;
     AFHTTPRequestOperationManager *manger = [AFHTTPRequestOperationManager manager];
     NSDictionary *parameters = @{
                                  @"_appid":@"101",
-                                 @"_code":@"bf1ced86a7ab4efbbb0f310f99f0097a",
+                                 @"_code":self.userID_Code,
                                  };
     NSString *url = [NSString stringWithFormat:@"%@common/file/upload",ServerAddressURL];
     [manger POST:url parameters:parameters success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject)
      {
-         NSLog(@"%@",responseObject);
+         NSLog(@"上传：%@",responseObject[@"data"]);
          
      } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
          NSLog(@"error : %@",error);
@@ -199,12 +198,12 @@ static NetManger *manger = nil;
     AFHTTPRequestOperationManager *manger = [AFHTTPRequestOperationManager manager];
     NSDictionary *parameters = @{
                                  @"_appid":@"101",
-                                 @"_code":@"bf1ced86a7ab4efbbb0f310f99f0097a",
+                                 @"_code":self.userID_Code,
                                  };
     NSString *url = [NSString stringWithFormat:@"%@common/advertise/getlist",ServerAddressURL ];
     [manger POST:url parameters:parameters success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject)
      {
-         NSLog(@"%@",responseObject);
+         NSLog(@"广告列表：%@",responseObject[@"data"]);
          
      } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
          NSLog(@"error : %@",error);
@@ -217,19 +216,33 @@ static NetManger *manger = nil;
     AFHTTPRequestOperationManager *manger = [AFHTTPRequestOperationManager manager];
     NSDictionary *parameters = @{
                                  @"_appid":@"101",
-                                 @"_code":@"bf1ced86a7ab4efbbb0f310f99f0097a",
-                                 @"content":@"application/json",
-                                 @"UserName": [NSString stringWithFormat:@"sample string %@",name],
-                                 @"Password": [NSString stringWithFormat:@"sample string %@",password],
+//                                 @"_code":self.userID_Code,
+//                                 @"content":@"application/json",
+                                 @"UserName": name,
+                                 @"Password": password,
                                  };
     NSString *url = [NSString stringWithFormat:@"%@common/user/login",ServerAddressURL ];
     [manger POST:url parameters:parameters success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject)
      {
-         
-         NSLog(@"%@ %@",responseObject[@"msg"],responseObject[@"code"]);
+         NSLog(@"登录：%@",responseObject[@"data"]);
          self.code = responseObject[@"code"];
-         self.title = responseObject[@"mag"];
-        [[NSNotificationCenter defaultCenter] postNotificationName:NetManagerRefreshNotify object:responseObject];
+         self.title = responseObject[@"msg"];
+         if ([responseObject[@"msg"] isEqualToString:@"success"]) {
+             self.userID_Code = responseObject[@"data"][@"Code"];
+             NSDictionary *dic = [NSDictionary dictionaryWithDictionary:responseObject[@"data"]];
+             NSMutableArray *m_datas = [[NSMutableArray alloc] initWithCapacity:0];
+             for (NSString *str in dic)
+             {
+                 [m_datas addObject:str];
+             }
+             for (int i = 0; i<m_datas.count; i++)
+             {
+//                 NSLog(@"%@",[dic objectForKey:m_datas[i]]);
+             }
+
+         }
+
+         [[NSNotificationCenter defaultCenter] postNotificationName:NetManagerRefreshNotify object:responseObject];
          
          
      } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
@@ -244,7 +257,7 @@ static NetManger *manger = nil;
     AFHTTPRequestOperationManager *manger = [AFHTTPRequestOperationManager manager];
     NSDictionary *parameters = @{
                                  @"_appid":@"101",
-                                 @"_code":@"bf1ced86a7ab4efbbb0f310f99f0097a",
+                                 @"_code":self.userID_Code,
                                  @"content":@"application/json",
                                  
                                  @"Code": @"sample string 1",
@@ -283,7 +296,7 @@ static NetManger *manger = nil;
     NSString *url = [NSString stringWithFormat:@"%@common/user/update",ServerAddressURL];
     [manger POST:url parameters:parameters success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject)
      {
-         NSLog(@"%@",responseObject);
+         NSLog(@"修改个人信息：%@",responseObject[@"data"]);
          
      } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
          NSLog(@"error : %@",error);
@@ -296,7 +309,7 @@ static NetManger *manger = nil;
     AFHTTPRequestOperationManager *manger = [AFHTTPRequestOperationManager manager];
     NSDictionary *parameters = @{
                                  @"_appid":@"101",
-                                 @"_code":@"bf1ced86a7ab4efbbb0f310f99f0097a",
+                                 @"_code":self.userID_Code,
                                  @"content":@"application/json",
                                  
                                  @"Keyword": @"sample string 1",
@@ -308,7 +321,7 @@ static NetManger *manger = nil;
     NSString *url = [NSString stringWithFormat:@"%@project/home/getprojectlist",ServerAddressURL];
     [manger POST:url parameters:parameters success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject)
      {
-         NSLog(@"%@",responseObject);
+         NSLog(@"项目列表：%@",responseObject[@"data"]);
          
      } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
          NSLog(@"error : %@",error);
@@ -321,7 +334,7 @@ static NetManger *manger = nil;
     AFHTTPRequestOperationManager *manger = [AFHTTPRequestOperationManager manager];
     NSDictionary *parameters = @{
                                  @"_appid":@"101",
-                                 @"_code":@"bf1ced86a7ab4efbbb0f310f99f0097a",
+                                 @"_code":self.userID_Code,
                                  @"content":@"application/json",
                                  
                                   @"Id": @"1"
@@ -329,8 +342,86 @@ static NetManger *manger = nil;
     NSString *url = [NSString stringWithFormat:@"%@project/home/getproject",ServerAddressURL];
     [manger POST:url parameters:parameters success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject)
      {
-         NSLog(@"%@",responseObject);
+         /*
+          {
+          ApplyMan = 3;
+          ApplyManName = "sample string 4";
+          ApprovalMan = 1;
+          ApprovalManName = "sample string 11";
+          CategoryType = 8;
+          CategoryTypeName = "<null>";
+          ClassType = 7;
+          ClassTypeName = "<null>";
+          CompanyType = 9;
+          CompanyTypeName = "<null>";
+          CreateTime = "2016-04-15 15:32:55";
+          CreateUserId = 13;
+          CreateUserName = "<null>";
+          CurrCheckStructure = 0;
+          CurrProcess =     {
+          CheckCuauses = "<null>";
+          CheckStatus = 0;
+          CheckTime = "<null>";
+          CheckUserId = "<null>";
+          CheckUserName = "<null>";
+          Id = 0;
+          Number = 0;
+          ProcessId = 0;
+          ProcessName = "<null>";
+          ProjectId = 0;
+          StructureId = 0;
+          StructureName = "<null>";
+          };
+          NatureType = 6;
+          NatureTypeName = "<null>";
+          ProcessId = 15;
+          ProcessList =     (
+          );
+          ProcessName = "<null>";
+          ProcessStatus = 0;
+          ProcessStatusName = "<null>";
+          ProjectId = 1;
+          ProjectName = "sample string 2";
+          Questions = "sample string 10";
+          Status = 14;
+          StatusName = "<null>";
+          Telephone = "sample string 5";
+          }
+          @property (nonatomic, copy) NSString *applyManName;// 申请人
+          @property (nonatomic, copy) NSString *telephone; // 电话
+          @property (nonatomic, copy) NSString *createTime; // 时间
+          @property (nonatomic, copy) NSString *natureType; // 项目性质
+          @property (nonatomic, copy) NSString *questions; // 存在问题
+          @property (nonatomic, copy) NSString *categoryType; // 投资种类
+          @property (nonatomic, copy) NSString *processStatus; // 项目进度标识
+          @property (nonatomic, copy) NSString *projectName; // 项目名称
+          @property (nonatomic, copy) NSString *companyType; // 行业
+          */
+         NSDictionary *dic = [NSDictionary dictionaryWithDictionary:responseObject[@"data"]];
          
+         for (int i = 0; i<13; i++) {
+             ProjectModel *model = [[ProjectModel alloc] init];
+             model.applyManName = dic[@"ApplyManName"];
+             model.projectName = dic[@"ProjectName"];
+             model.telephone = dic[@"Telephone"];
+             model.createTime = dic[@"CreateTime"];
+             model.natureType = dic[@"NatureType"];
+             model.questions = dic[@"Questions"];
+             model.categoryType = dic[@"CategoryType"];
+             model.processStatus = dic[@"ProcessStatus"];
+             model.companyType = dic[@"CompanyType"];
+             model.test1 = @"a";
+             model.test2 = @"2";
+             model.test3 = @"3";
+             if (self.m_details.count == 0) {
+                 self.m_details = [[NSMutableArray alloc] initWithCapacity:0];
+             }
+             [self.m_details addObject:model];
+         }
+        
+         NSLog(@"项目详情：%@",responseObject[@"data"]);
+         
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"Getproject" object:nil];
      } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
          NSLog(@"error : %@",error);
      }];
@@ -341,21 +432,21 @@ static NetManger *manger = nil;
     AFHTTPRequestOperationManager *manger = [AFHTTPRequestOperationManager manager];
     NSDictionary *parameters = @{
                                  @"_appid":@"101",
-                                 @"_code":@"bf1ced86a7ab4efbbb0f310f99f0097a",
+                                 @"_code":self.userID_Code,
                                  @"content":@"application/json",
                                  
                                  @"ProjectId": @"1",
-                                 @"ProjectName": @"sample string 2",
+                                 @"ProjectName": @"sample string 2",// 项目名
                                  @"ApplyMan": @"3",
                                  @"ApplyManName": @"sample string 4",
-                                 @"Telephone": @"sample string 5",
-                                 @"NatureType": @"6",
-                                 @"ClassType": @"7",
-                                 @"CategoryType": @"8",
-                                 @"CompanyType": @"9",
-                                 @"Questions": @"sample string 10",
+                                 @"Telephone": @"sample string 5", // 电话
+                                 @"NatureType": @"6", // 投资种类
+                                 @"ClassType": @"7",  // 项目性质
+                                 @"CategoryType": @"8", // 项目分类
+                                 @"CompanyType": @"9", // 行业
+                                 @"Questions": @"sample string 10", // 存在问题
                                  @"ApprovalMan": @"1",
-                                 @"ApprovalManName": @"sample string 11",
+                                 @"ApprovalManName": @"sample string 11", // 同意
                                  @"CreateTime": @"2016-04-14 10:02:11",
                                  @"CreateUserId": @"13",
                                  @"Status": @"14",
@@ -364,28 +455,31 @@ static NetManger *manger = nil;
     NSString *url = [NSString stringWithFormat:@"%@project/home/projectsave",ServerAddressURL];
     [manger POST:url parameters:parameters success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject)
      {
-         NSLog(@"%@",responseObject);
+         NSLog(@"保存上报项目：%@",responseObject[@"data"]);
          
      } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
          NSLog(@"error : %@",error);
      }];
 }
 // 修改密码
-- (void)accountUpdatepassword
+- (void)accountUpdatepasswordWithOldPassword:(NSString *)oldPw AndNewPassword:(NSString *)newPw
 {
     AFHTTPRequestOperationManager *manger = [AFHTTPRequestOperationManager manager];
     NSDictionary *parameters = @{
                                  @"_appid":@"101",
-                                 @"_code":@"bf1ced86a7ab4efbbb0f310f99f0097a",
+                                 @"_code":self.userID_Code,
                                  @"content":@"application/json",
                                  
-                                 @"OldPassword": @"sample string 1",
-                                 @"NewPassword": @"sample string 2"
+                                 @"OldPassword": oldPw,
+                                 @"NewPassword": newPw
                                  };
     NSString *url = [NSString stringWithFormat:@"%@systemset/account/updatepassword",ServerAddressURL];
     [manger POST:url parameters:parameters success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject)
      {
-         NSLog(@"%@",responseObject);
+//         NSLog(@"%@ %@ %@",oldPw,newPw,self.userID_Code);
+        NSLog(@"修改密码：%@ %@ %@",responseObject[@"code"],responseObject[@"data"],responseObject[@"msg"]);
+         [[NSNotificationCenter defaultCenter] postNotificationName:@"updatepassword" object:responseObject];
+         
          
      } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
          NSLog(@"error : %@",error);
@@ -397,7 +491,7 @@ static NetManger *manger = nil;
     AFHTTPRequestOperationManager *manger = [AFHTTPRequestOperationManager manager];
     NSDictionary *parameters = @{
                                  @"_appid":@"101",
-                                 @"_code":@"bf1ced86a7ab4efbbb0f310f99f0097a",
+                                 @"_code":self.userID_Code,
                                  @"content":@"application/json",
                                  
                                  @"Mobile": @"sample string 1",
@@ -407,7 +501,7 @@ static NetManger *manger = nil;
     NSString *url = [NSString stringWithFormat:@"%@systemset/account/resetpassword",ServerAddressURL];
     [manger POST:url parameters:parameters success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject)
      {
-         NSLog(@"%@",responseObject);
+        NSLog(@"重置用户密码：%@",responseObject[@"data"]);
          
      } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
          NSLog(@"error : %@",error);
@@ -421,7 +515,7 @@ static NetManger *manger = nil;
     AFHTTPRequestOperationManager *manger = [AFHTTPRequestOperationManager manager];
     NSDictionary *parameters = @{
                                  @"_appid":@"101",
-                                 @"_code":@"bf1ced86a7ab4efbbb0f310f99f0097a",
+                                 @"_code":self.userID_Code,
                                  @"content":@"application/json",
                                  
                                 @"AppId": @"103"
@@ -429,7 +523,26 @@ static NetManger *manger = nil;
     NSString *url = [NSString stringWithFormat:@"%@systemset/getlatestversoin",ServerAddressURL];
     [manger POST:url parameters:parameters success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject)
      {
-         NSLog(@"%@",responseObject);
+        NSLog(@"获取最新版本：%@",responseObject[@"data"]);
+         self.code = responseObject[@"code"];
+         self.title = responseObject[@"msg"];
+         if ([responseObject[@"msg"] isEqualToString:@"success"]) {
+             
+            NSDictionary *dic = [NSDictionary dictionaryWithDictionary:responseObject[@"data"]];
+             NSMutableArray *m_datas = [[NSMutableArray alloc] initWithCapacity:0];
+             for (NSString *str in dic)
+             {
+                 [m_datas addObject:str];
+             }
+             for (int i = 0; i<m_datas.count; i++)
+             {
+//                 NSLog(@"%@",[dic objectForKey:m_datas[i]]);
+                self.versionName =dic[@"FileDesc"];
+             }
+             
+         }
+         
+         [[NSNotificationCenter defaultCenter] postNotificationName:@"VersionName" object:self.versionName];
          
      } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
          NSLog(@"error : %@",error);
@@ -441,7 +554,7 @@ static NetManger *manger = nil;
     AFHTTPRequestOperationManager *manger = [AFHTTPRequestOperationManager manager];
     NSDictionary *parameters = @{
                                  @"_appid":@"101",
-                                 @"_code":@"bf1ced86a7ab4efbbb0f310f99f0097a",
+                                 @"_code":self.userID_Code,
                                  @"content":@"application/json",
                                  
                                  @"ClientAppId": @"103",
@@ -451,7 +564,7 @@ static NetManger *manger = nil;
     NSString *url = [NSString stringWithFormat:@"%@systemset/addfeedback",ServerAddressURL];
     [manger POST:url parameters:parameters success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject)
      {
-         NSLog(@"%@",responseObject);
+        NSLog(@"添加系统反馈：%@",responseObject[@"data"]);
          
      } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
          NSLog(@"error : %@",error);
