@@ -75,7 +75,7 @@
         return cell;
     }
     if (indexPath.row == 1) {
-        NSLog(@"%d",self.statet);
+//        NSLog(@"%d",self.statet);
         ProgressTableViewCell *cellProgess = [tableView dequeueReusableCellWithIdentifier:@"ProgressTableViewCell"];
         cellProgess.selectionStyle = UITableViewCellSelectionStyleNone;
         [cellProgess setState:self.statet];
@@ -119,6 +119,7 @@
     NSLog(@"click");
     DetailsViewController *detailsVC = [[DetailsViewController alloc] init];
     detailsVC.title = @"项目详情";
+    detailsVC.proID = [NSString stringWithFormat:@"%d",self.statet];
     [self.navigationController pushViewController:detailsVC animated:YES];
 }
 +(UIViewController *)viewController:(UIView *)view{

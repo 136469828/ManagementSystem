@@ -17,39 +17,9 @@
     NSString *nameStr;
 //    CGFloat widht;
 //    int r,g,b;
-    NSLog(@"%d",self.stateSy);
-    switch (self.stateSy) {
-        case 0:
-        {
-//            widht = ScreenWidth*0.3;
-//            r = 197;  g = 0; b = 35;
-            nameStr = @"梁健聪";
-            stetaStr = @"审批未通过";
-            phoneNum = @"18575523716";
-        }
-            break;
-        case 1:
-        {
-//            widht = ScreenWidth*0.9;
-//            r = 72; g = 157; b = 32;
-            nameStr = @"梁健明";
-            stetaStr = @"审批通过";
-            phoneNum = @"13202601163";
-        }
-            break;
-        case 2:
-        {
-//            widht = ScreenWidth*0.6;
-//            r = 249; g = 220; b = 0;
-            nameStr = @"梁健康";
-            stetaStr = @"审批中";
-            phoneNum = @"136469828";
-        }
-            break;
-            
-        default:
-            break;
-    }
+//    NSLog(@"%d",self.stateSy);
+    stetaStr = self.stateTitle;
+
     
 //    UIView *prgess = [[UIView alloc] initWithFrame:CGRectMake(10,1.2*self.bounds.size.height, 0, 10)];
 //    prgess.layer.cornerRadius = 5;

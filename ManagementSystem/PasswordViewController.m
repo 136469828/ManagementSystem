@@ -9,6 +9,7 @@
 #import "PasswordViewController.h"
 #import "ForgetViewController.h"
 #import "NetManger.h"
+#import "LCProgressHUD.h"
 @interface PasswordViewController ()<UITextFieldDelegate>
 
 @end
@@ -42,6 +43,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+
 }
 */
 - (BOOL)textFieldShouldEndEditing:(UITextField *)textField
@@ -56,6 +58,7 @@
 }
 - (void)updatepassword
 {
+     [LCProgressHUD showLoading:@"正在加载"];
     NetManger *manger = [NetManger shareInstance];
     manger.oldPword = self.theOldPassword.text;
     manger.passwordOfnew = self.theNewPassword.text;
@@ -66,9 +69,18 @@
 }
 - (void)showUpdatepassword:(NSNotification*)theObj
 {
+    [self hideHUD];
+     [LCProgressHUD showLoading:theObj.object[@"msg"]];
     UIAlertView *al = [[UIAlertView alloc] initWithTitle:@"提示" message:theObj.object[@"msg"] delegate:self cancelButtonTitle:@"确认" otherButtonTitles:nil, nil];
     [al show];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
-
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    [self.view endEditing:YES];
+}
+- (void)hideHUD {
+    
+    [LCProgressHUD hide];
+}
 @end

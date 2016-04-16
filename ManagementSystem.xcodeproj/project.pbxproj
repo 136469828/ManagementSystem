@@ -167,6 +167,9 @@
 		84FC33491CC0DD9600FADFC4 /* AddLinkmanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FC33471CC0DD9600FADFC4 /* AddLinkmanViewController.m */; };
 		84FC334A1CC0DD9600FADFC4 /* AddLinkmanViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84FC33481CC0DD9600FADFC4 /* AddLinkmanViewController.xib */; };
 		84FC334D1CC0E22100FADFC4 /* ProjectModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FC334C1CC0E22100FADFC4 /* ProjectModel.m */; };
+		84FC337E1CC1E2E300FADFC4 /* LCProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 84FC337B1CC1E2E300FADFC4 /* LCProgressHUD.bundle */; };
+		84FC337F1CC1E2E300FADFC4 /* LCProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FC337D1CC1E2E300FADFC4 /* LCProgressHUD.m */; };
+		84FC33831CC1E39E00FADFC4 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FC33821CC1E39E00FADFC4 /* MBProgressHUD.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -229,7 +232,6 @@
 		6F4ABF331C81A9E30025DAAF /* SeachViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SeachViewController.h; sourceTree = "<group>"; };
 		6F4ABF341C81A9E30025DAAF /* SeachViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SeachViewController.m; sourceTree = "<group>"; };
 		6F4ABF351C81A9E30025DAAF /* SeachViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SeachViewController.xib; sourceTree = "<group>"; };
-		6F4ABF3D1C81AA4A0025DAAF /* Tool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Tool.h; sourceTree = "<group>"; };
 		6F4ABF3E1C81AA880025DAAF /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		6F58F8EC1C83FB36000E45E5 /* gouxuan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gouxuan.png; sourceTree = "<group>"; };
 		6F58F8EE1C840724000E45E5 /* gouxuan2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gouxuan2.png; sourceTree = "<group>"; };
@@ -434,6 +436,12 @@
 		84FC33481CC0DD9600FADFC4 /* AddLinkmanViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddLinkmanViewController.xib; sourceTree = "<group>"; };
 		84FC334B1CC0E22100FADFC4 /* ProjectModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectModel.h; sourceTree = "<group>"; };
 		84FC334C1CC0E22100FADFC4 /* ProjectModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectModel.m; sourceTree = "<group>"; };
+		84FC33791CC1DFF500FADFC4 /* Tool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tool.h; sourceTree = "<group>"; };
+		84FC337B1CC1E2E300FADFC4 /* LCProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = LCProgressHUD.bundle; sourceTree = "<group>"; };
+		84FC337C1CC1E2E300FADFC4 /* LCProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCProgressHUD.h; sourceTree = "<group>"; };
+		84FC337D1CC1E2E300FADFC4 /* LCProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCProgressHUD.m; sourceTree = "<group>"; };
+		84FC33811CC1E39E00FADFC4 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		84FC33821CC1E39E00FADFC4 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -857,9 +865,10 @@
 		6F8EFCA41C83E9C30099B59C /* Tool */ = {
 			isa = PBXGroup;
 			children = (
+				84FC33801CC1E39E00FADFC4 /* MBProgressHUD */,
+				84FC337A1CC1E2E300FADFC4 /* LCProgressHUD */,
 				84B9FE071CBC966400AA5DD4 /* SDWebImage */,
 				84B9FDEA1CBC964700AA5DD4 /* AFNetworking */,
-				6F4ABF3D1C81AA4A0025DAAF /* Tool.h */,
 			);
 			name = Tool;
 			sourceTree = "<group>";
@@ -900,6 +909,7 @@
 		6F8EFCA81C83E9F40099B59C /* system */ = {
 			isa = PBXGroup;
 			children = (
+				84FC33791CC1DFF500FADFC4 /* Tool.h */,
 				6F4ABF3E1C81AA880025DAAF /* PrefixHeader.pch */,
 				6F4ABE651C8198970025DAAF /* AppDelegate.h */,
 				6F4ABE661C8198970025DAAF /* AppDelegate.m */,
@@ -945,8 +955,7 @@
 				6FFC6E821C927FE8007E1BB0 /* tool */,
 				6F8B90DA1C91773F007FA138 /* ctr */,
 				6F8B90DB1C917748007FA138 /* view */,
-				84FC334B1CC0E22100FADFC4 /* ProjectModel.h */,
-				84FC334C1CC0E22100FADFC4 /* ProjectModel.m */,
+				84FC33841CC1E59F00FADFC4 /* model */,
 			);
 			name = "项目查询";
 			sourceTree = "<group>";
@@ -1100,6 +1109,34 @@
 			path = SDWebImage;
 			sourceTree = "<group>";
 		};
+		84FC337A1CC1E2E300FADFC4 /* LCProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				84FC337B1CC1E2E300FADFC4 /* LCProgressHUD.bundle */,
+				84FC337C1CC1E2E300FADFC4 /* LCProgressHUD.h */,
+				84FC337D1CC1E2E300FADFC4 /* LCProgressHUD.m */,
+			);
+			path = LCProgressHUD;
+			sourceTree = "<group>";
+		};
+		84FC33801CC1E39E00FADFC4 /* MBProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				84FC33811CC1E39E00FADFC4 /* MBProgressHUD.h */,
+				84FC33821CC1E39E00FADFC4 /* MBProgressHUD.m */,
+			);
+			path = MBProgressHUD;
+			sourceTree = "<group>";
+		};
+		84FC33841CC1E59F00FADFC4 /* model */ = {
+			isa = PBXGroup;
+			children = (
+				84FC334B1CC0E22100FADFC4 /* ProjectModel.h */,
+				84FC334C1CC0E22100FADFC4 /* ProjectModel.m */,
+			);
+			name = model;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1247,6 +1284,7 @@
 				6F8EA7471C91226700D5C649 /* navBackBtn@2x.png in Resources */,
 				6F8EFD4B1C83F93A0099B59C /* loginName.png in Resources */,
 				6F9099F21C92561D0094E0B4 /* CommentTableViewCell.xib in Resources */,
+				84FC337E1CC1E2E300FADFC4 /* LCProgressHUD.bundle in Resources */,
 				6F6D3A711C8442A100E2A032 /* photo.png in Resources */,
 				6F8EA74B1C91226700D5C649 /* ZLNoAuthorityViewController.xib in Resources */,
 				6F8EA73D1C91226700D5C649 /* ZLPhotoBrowserCell.xib in Resources */,
@@ -1327,6 +1365,7 @@
 				6F4ABF3B1C81A9E30025DAAF /* SeachViewController.m in Sources */,
 				84B9FE341CBC966400AA5DD4 /* UIImage+MultiFormat.m in Sources */,
 				84FC33441CC0DA9000FADFC4 /* ForgetViewController.m in Sources */,
+				84FC337F1CC1E2E300FADFC4 /* LCProgressHUD.m in Sources */,
 				6F8B90E41C917FDD007FA138 /* ProgressTableViewCell.m in Sources */,
 				6F8EA7751C9152E600D5C649 /* MassTableViewCell.m in Sources */,
 				84B9FE2A1CBC966400AA5DD4 /* NSData+ImageContentType.m in Sources */,
@@ -1370,6 +1409,7 @@
 				6F0E10601C93FAFE00890AF9 /* SettingViewController.m in Sources */,
 				6F4ABF361C81A9E30025DAAF /* NormalTableViewCell.m in Sources */,
 				6F9099EC1C9252050094E0B4 /* README.md in Sources */,
+				84FC33831CC1E39E00FADFC4 /* MBProgressHUD.m in Sources */,
 				6F9099EA1C9252050094E0B4 /* JHKeyframeAnimation.m in Sources */,
 				6F8EA74F1C91226700D5C649 /* ZLPhotoTool.m in Sources */,
 				6F9099ED1C9252050094E0B4 /* UIView+JHChainableAnimations.m in Sources */,

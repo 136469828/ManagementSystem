@@ -11,6 +11,7 @@
 
 @interface ProgressTableViewCell : UITableViewCell
 @property (nonatomic, assign) int stateSy;
+@property (nonatomic, copy) NSString *stateTitle;
 - (void)setState:(int)state;
 
 @end

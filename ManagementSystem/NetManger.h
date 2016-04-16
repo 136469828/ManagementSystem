@@ -100,7 +100,11 @@ typedef enum
 @property (nonatomic, copy) NSString *versionName;
 @property (nonatomic, copy) NSString *oldPword;
 @property (nonatomic, copy) NSString *passwordOfnew;
+@property (nonatomic, copy) NSString *projectID;
+
 @property (nonatomic, strong) NSMutableArray *m_details;
+@property (nonatomic, strong) NSMutableArray *m_projectInfoArr;
+@property (nonatomic, assign) BOOL isKeyword;
 + (instancetype)shareInstance;
 - (void)loadData:(RequestState)requet;
 @end

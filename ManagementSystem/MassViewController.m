@@ -53,6 +53,8 @@
     [addBtn addTarget:self action:@selector(addMassAction) forControlEvents:UIControlEventTouchDown];
     [hearView addSubview:addBtn];
     
+    
+    
 }
 - (void)setTableView{
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 10, SCREEN_WIDTH, SCREEN_HEIGHT - 69) style:UITableViewStylePlain];

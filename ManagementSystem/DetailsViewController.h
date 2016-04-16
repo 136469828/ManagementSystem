@@ -11,4 +11,5 @@
 @interface DetailsViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
 @property (nonatomic,strong) UITableView *tableView;
 @property (nonatomic,strong) UILabel *subLabel;
+@property (nonatomic, copy) NSString *proID;
 @end

@@ -9,10 +9,12 @@
 #import "DetailsViewController.h"
 #import "NetManger.h"
 #import "ProjectModel.h"
+#import "LCProgressHUD.h"
 @interface DetailsViewController ()
 {
     NSArray *dataArr;
 }
+@property (nonatomic, strong) NetManger *manger;
 @property NSArray *titleArr;
 @end
 
@@ -47,14 +49,18 @@
                  ,@"正常"
                  ,@"私企"
                  ,@"审核未通过"];
-    NetManger *manger = [NetManger shareInstance];
-    [manger loadData:RequestOfGetprojectt];
+    _manger = [NetManger shareInstance];
+//    NSLog(@"%@",self.proID);
+    _manger.projectID = self.proID;
+    [_manger loadData:RequestOfGetprojectt];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadData) name:@"Getproject" object:nil];
     [self setTableView];
 }
 - (void)reloadData
 {
+    [LCProgressHUD showLoading:@"正在加载"];
     [self.tableView reloadData];
+    [self hideHUD];
 }
 - (void)setTableView{
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight - 69) style:UITableViewStyleGrouped];
@@ -93,27 +99,66 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
         cell.textLabel.text = self.titleArr[indexPath.row];
         UILabel *contentL = [[UILabel alloc] initWithFrame:CGRectMake(ScreenWidth/3, 2, ScreenWidth - ScreenWidth/3 - 10, 40)];
-        NetManger *manger = [NetManger shareInstance];
-        if (manger.m_details.count == 0) {
+        if (_manger.m_details.count == 0)
+        {
             contentL.text = dataArr[indexPath.row];
         }
         else
         {
-            NSMutableArray *m_dataArr = [[NSMutableArray alloc] initWithCapacity:0];
-            for (int i = 0; i<13; i++)
+            ProjectModel *model = _manger.m_details[indexPath.row];
+            /*
+             @property (nonatomic, copy) NSString *applyManName;// 申请人
+             @property (nonatomic, copy) NSString *telephone; // 电话
+             @property (nonatomic, copy) NSString *createTime; // 时间
+             @property (nonatomic, copy) NSString *natureType; // 项目性质
+             @property (nonatomic, copy) NSString *test3; // 投资总额
+             @property (nonatomic, copy) NSString *projectName; // 项目名称
+             @property (nonatomic, copy) NSString *companyType; // 投资种类
+             @property (nonatomic, copy) NSString *categoryType; // 行业
+             @property (nonatomic, copy) NSString *processStatus; // 项目进度标识
+             @property (nonatomic, copy) NSString *questions; // 存在问题
+             @property (nonatomic, copy) NSString *processName; // 项目分类
+             @property (nonatomic, copy) NSString *status; // 项目状态标识
+             */
+            if ([model.status isEqualToString:@"2"])
             {
-                ProjectModel *mode = manger.m_details[i];
-                [m_dataArr addObject:mode];
+                model.status = @"审批未通过";
             }
-//            ProjectModel *model = manger.m_details[indexPath.row];
-            contentL.text = m_dataArr[indexPath.row];
-            NSLog(@"%@",contentL.text);
+            else if ([model.status isEqualToString:@"14"])
+            {
+                model.status = @"审批中";
+            }
+            if ([model.processStatus isEqualToString:@"0"]) {
+                model.processStatus = @"正常";
+            }
+            else
+            {
+                model.processStatus = @"待定";
+            }
+            
+            dataArr = @[model.applyManName, // 申请人
+                        model.telephone,    // 电话
+                        model.createTime,   // 时间
+                        model.natureType,   // 项目性质
+                        model.test3,        // 投资总额
+                        model.projectName,  // 项目名称
+                        model.companyType,  // 投资种类
+                        model.categoryType,  // 行业
+                        model.processStatus, // 项目进度标识
+                        model.questions,    // 存在问题
+                        model.classTypeName,// 项目分类
+                        model.status,    // 项目状态标识
+                        ];
+            
+            contentL.text = dataArr[indexPath.row];
+
         }
-        
-//        contentL.text = dataArr[indexPath.row];
+
+
         contentL.font = [UIFont systemFontOfSize:15];
         [cell.contentView addSubview:contentL];
-        if (indexPath.row == 11) {
+        if (indexPath.row == 11)
+        {
             contentL.textColor = [UIColor redColor];
         }
 
@@ -124,6 +169,10 @@
 #pragma cancelAction
 - (void)cencelBtnAction{
     NSLog(@"click");
+}
+- (void)hideHUD {
+    
+    [LCProgressHUD hide];
 }
 /*
 #pragma mark - Navigation

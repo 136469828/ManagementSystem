@@ -61,12 +61,12 @@ static NetManger *manger = nil;
             break;
         case RequestOfGetprojectlist:
         {
-            [self homeGetprojectlist];
+            [self homeGetprojectlistWithKeyword:self.isKeyword];
         }
             break;
         case RequestOfGetprojectt:
         {
-            [self homeGetproject];
+            [self homeGetprojectWithProjectID:self.projectID];
         }
             break;
         case RequestOfProjectsave:
@@ -304,24 +304,71 @@ static NetManger *manger = nil;
 }
 
 // 项目列表
-- (void)homeGetprojectlist
+- (void)homeGetprojectlistWithKeyword:(BOOL) iskeyword
 {
     AFHTTPRequestOperationManager *manger = [AFHTTPRequestOperationManager manager];
-    NSDictionary *parameters = @{
-                                 @"_appid":@"101",
-                                 @"_code":self.userID_Code,
-                                 @"content":@"application/json",
-                                 
-                                 @"Keyword": @"sample string 1",
-                                 @"Status": @"2",
-                                 @"PageIndex": @"3",
-                                 @"PageSize": @"4"
-                                 
-                                 };
+    NSDictionary *parameters = [[NSDictionary alloc] init];
+    if (iskeyword == YES) {
+        parameters = @{
+                       
+                       @"_appid":@"101",
+                       @"_code":self.userID_Code,
+                       @"content":@"application/json",
+                       
+                       @"Keyword": @"sample string 1",
+                       @"Status": @"2",
+                       @"PageIndex": @"3",
+                       @"PageSize": @"4"
+                       
+                       };
+    }
+    else
+    {
+        parameters = @{
+                       @"_appid":@"101",
+                       @"_code":self.userID_Code,
+                       @"content":@"application/json",
+                       @"Status": @"2",
+                       };
+    }
     NSString *url = [NSString stringWithFormat:@"%@project/home/getprojectlist",ServerAddressURL];
     [manger POST:url parameters:parameters success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject)
      {
-         NSLog(@"项目列表：%@",responseObject[@"data"]);
+         // Status 14 未通过 2通过
+         NSLog(@"项目列表：%@",responseObject[@"data"][@"DataList"]);
+         NSArray *dataLists = responseObject[@"data"][@"DataList"];
+         NSLog(@"%ld",dataLists.count);
+//         for (int i = 0; i< dataLists.count; i++)
+//         {
+//
+//         }
+         [self.m_projectInfoArr removeAllObjects];
+         for (NSDictionary *dic in dataLists) {
+             ProjectModel *model = [[ProjectModel alloc] init];
+             //                 NSLog(@"%@",dic[@"ProjectName"]);
+             model.applyManName     = [NSString stringWithFormat:@"%@",dic[@"ApplyManName"]];
+             model.telephone        = [NSString stringWithFormat:@"%@",dic[@"Telephone"]];
+             model.createTime       = [NSString stringWithFormat:@"%@",dic[@"CreateTime"]];
+             model.natureType       = [NSString stringWithFormat:@"%@",dic[@"NatureTypeName"]];
+             model.test3            = @"暂无";
+             model.projectName      = [NSString stringWithFormat:@"%@",dic[@"ProjectName"]];
+             model.categoryType     = [NSString stringWithFormat:@"%@",dic[@"CategoryTypeName"]];
+             model.companyType      = [NSString stringWithFormat:@"%@",dic[@"CompanyTypeName"]];
+             model.processStatus    = [NSString stringWithFormat:@"%@",dic[@"ProcessStatus"]];
+             model.questions        = [NSString stringWithFormat:@"%@",dic[@"Questions"]];
+             model.classTypeName      = [NSString stringWithFormat:@"%@",dic[@"ClassTypeName"]];
+             model.status           = [NSString stringWithFormat:@"%@",dic[@"Status"]];
+             model.projectIDofModel = [NSString stringWithFormat:@"%@",dic[@"ProjectId"]];
+             if (self.m_projectInfoArr.count == 0)
+             {
+                 self.m_projectInfoArr = [[NSMutableArray alloc] initWithCapacity:0];
+             }
+             [self.m_projectInfoArr addObject:model];
+             
+         }
+
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetprojectlistWithKeyword" object:nil];
+
          
      } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
          NSLog(@"error : %@",error);
@@ -329,7 +376,7 @@ static NetManger *manger = nil;
 }
 
 // 项目详情
-- (void)homeGetproject
+- (void)homeGetprojectWithProjectID :(NSString *)ID
 {
     AFHTTPRequestOperationManager *manger = [AFHTTPRequestOperationManager manager];
     NSDictionary *parameters = @{
@@ -337,87 +384,69 @@ static NetManger *manger = nil;
                                  @"_code":self.userID_Code,
                                  @"content":@"application/json",
                                  
-                                  @"Id": @"1"
+                                 @"Id":ID
                                  };
     NSString *url = [NSString stringWithFormat:@"%@project/home/getproject",ServerAddressURL];
     [manger POST:url parameters:parameters success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject)
      {
          /*
-          {
-          ApplyMan = 3;
-          ApplyManName = "sample string 4";
-          ApprovalMan = 1;
-          ApprovalManName = "sample string 11";
-          CategoryType = 8;
-          CategoryTypeName = "<null>";
-          ClassType = 7;
-          ClassTypeName = "<null>";
-          CompanyType = 9;
-          CompanyTypeName = "<null>";
-          CreateTime = "2016-04-15 15:32:55";
-          CreateUserId = 13;
-          CreateUserName = "<null>";
-          CurrCheckStructure = 0;
-          CurrProcess =     {
-          CheckCuauses = "<null>";
-          CheckStatus = 0;
-          CheckTime = "<null>";
-          CheckUserId = "<null>";
-          CheckUserName = "<null>";
-          Id = 0;
-          Number = 0;
-          ProcessId = 0;
-          ProcessName = "<null>";
-          ProjectId = 0;
-          StructureId = 0;
-          StructureName = "<null>";
-          };
-          NatureType = 6;
-          NatureTypeName = "<null>";
-          ProcessId = 15;
-          ProcessList =     (
-          );
-          ProcessName = "<null>";
-          ProcessStatus = 0;
-          ProcessStatusName = "<null>";
-          ProjectId = 1;
-          ProjectName = "sample string 2";
-          Questions = "sample string 10";
-          Status = 14;
-          StatusName = "<null>";
-          Telephone = "sample string 5";
-          }
           @property (nonatomic, copy) NSString *applyManName;// 申请人
           @property (nonatomic, copy) NSString *telephone; // 电话
           @property (nonatomic, copy) NSString *createTime; // 时间
           @property (nonatomic, copy) NSString *natureType; // 项目性质
-          @property (nonatomic, copy) NSString *questions; // 存在问题
-          @property (nonatomic, copy) NSString *categoryType; // 投资种类
-          @property (nonatomic, copy) NSString *processStatus; // 项目进度标识
+          @property (nonatomic, copy) NSString *test3; // 投资总额
           @property (nonatomic, copy) NSString *projectName; // 项目名称
-          @property (nonatomic, copy) NSString *companyType; // 行业
+          @property (nonatomic, copy) NSString *companyType; // 投资种类
+          @property (nonatomic, copy) NSString *categoryType; // 行业
+          @property (nonatomic, copy) NSString *processStatus; // 项目进度标识
+          @property (nonatomic, copy) NSString *questions; // 存在问题
+          @property (nonatomic, copy) NSString *processName; // 项目分类
+          @property (nonatomic, copy) NSString *status; // 项目状态标识
           */
          NSDictionary *dic = [NSDictionary dictionaryWithDictionary:responseObject[@"data"]];
-         
-         for (int i = 0; i<13; i++) {
+//          NSMutableArray *m_datas = [[NSMutableArray alloc] initWithCapacity:0];
+//          for (NSString *str in dic)
+//          {
+//              [m_datas addObject:str];
+//          }
+         [self.m_details removeAllObjects];
+         for (int i = 0; i<13; i++)
+         {
              ProjectModel *model = [[ProjectModel alloc] init];
-             model.applyManName = dic[@"ApplyManName"];
-             model.projectName = dic[@"ProjectName"];
-             model.telephone = dic[@"Telephone"];
-             model.createTime = dic[@"CreateTime"];
-             model.natureType = dic[@"NatureType"];
-             model.questions = dic[@"Questions"];
-             model.categoryType = dic[@"CategoryType"];
-             model.processStatus = dic[@"ProcessStatus"];
-             model.companyType = dic[@"CompanyType"];
-             model.test1 = @"a";
-             model.test2 = @"2";
-             model.test3 = @"3";
-             if (self.m_details.count == 0) {
+             model.applyManName     = [NSString stringWithFormat:@"%@",dic[@"ApplyManName"]];
+             model.telephone        = [NSString stringWithFormat:@"%@",dic[@"Telephone"]];
+             model.createTime       = [NSString stringWithFormat:@"%@",dic[@"CreateTime"]];
+             model.natureType       = [NSString stringWithFormat:@"%@",dic[@"NatureTypeName"]];
+             model.test3            = @"暂无";
+             model.projectName      = [NSString stringWithFormat:@"%@",dic[@"ProjectName"]];
+             model.categoryType     = [NSString stringWithFormat:@"%@",dic[@"CategoryTypeName"]];
+             model.companyType      = [NSString stringWithFormat:@"%@",dic[@"CompanyTypeName"]];
+             model.processStatus    = [NSString stringWithFormat:@"%@",dic[@"ProcessStatus"]];
+             model.questions        = [NSString stringWithFormat:@"%@",dic[@"Questions"]];
+             model.classTypeName      = [NSString stringWithFormat:@"%@",dic[@"ClassTypeName"]];
+             model.status           = [NSString stringWithFormat:@"%@",dic[@"Status"]];
+
+             if (self.m_details.count == 0)
+             {
                  self.m_details = [[NSMutableArray alloc] initWithCapacity:0];
              }
              [self.m_details addObject:model];
          }
+//         NSMutableArray *m_datas = [[NSMutableArray alloc] initWithCapacity:0];
+//         for (NSString *str in dic)
+//         {
+//             [m_datas addObject:str];
+//         }
+//         for (int i = 0; i<m_datas.count; i++)
+//         {
+//            NSLog(@"%@",[dic objectForKey:m_datas[i]]);
+//             if (self.m_details.count == 0)
+//             {
+//                  self.m_details = [[NSMutableArray alloc] initWithCapacity:0];
+//             }
+//             [self.m_details addObject:[dic objectForKey:m_datas[i]]];
+//
+//         }
         
          NSLog(@"项目详情：%@",responseObject[@"data"]);
          

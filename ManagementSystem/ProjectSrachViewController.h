@@ -23,5 +23,5 @@ typedef enum
     state statetype;
 }
 @property UITableView *tableView;
-
+@property (nonatomic, copy) NSString *ID;
 @end

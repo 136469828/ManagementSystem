@@ -119,6 +119,7 @@
 - (void)pushProject{
     NSLog(@"click");
     DetailsViewController *detailsVC = [[DetailsViewController alloc] init];
+    detailsVC.proID = [NSString stringWithFormat:@"%d",self.statet];
     detailsVC.title = @"项目详情";
     [self.navigationController pushViewController:detailsVC animated:YES];
 }

@@ -9,7 +9,7 @@
 #import "LoginViewController.h"
 #import "NetManger.h"
 #import "RootTabbarController.h"
-
+#import "LCProgressHUD.h"
 @interface LoginViewController ()
 @property (weak, nonatomic) IBOutlet UIButton *rememberBtn;
 @property (weak, nonatomic) IBOutlet UIButton *aotuLoginBtn;
@@ -17,7 +17,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *passWordImg;
 @property (weak, nonatomic) IBOutlet UITextField *passWordTF;
 @property (weak, nonatomic) IBOutlet UIImageView *nameImg;
-
 @property (weak, nonatomic) IBOutlet UIButton *loginBtn;
 @end
 
@@ -42,12 +41,17 @@
     
     self.loginBtn.layer.cornerRadius = 15;
     self.passWordTF.secureTextEntry = YES;
-    
+
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loging:) name:NetManagerRefreshNotify object:nil];
+}
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self hideHUD];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -72,11 +76,16 @@
      NetManger *manger = [NetManger shareInstance];
     manger.name = self.userNameTF.text; manger.password = self.passWordTF.text;
     [manger loadData:RequestOfLogin];
-
+    [LCProgressHUD showLoading:@"正在加载"];
+    
+    
 //    RootTabbarController *rootTabbarCtr = [[RootTabbarController alloc] init];
 //    [self presentViewController:rootTabbarCtr animated:YES completion:nil];
 }
-
+- (void)showSuccess {
+    
+    [LCProgressHUD showSuccess:@"加载成功"];
+}
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
     [self.view endEditing:YES];
 }
@@ -91,9 +100,14 @@
     }
     else
     {
-        UIAlertView *al = [[UIAlertView alloc] initWithTitle:@"提示" message:theObj.object[@"msg"] delegate:self cancelButtonTitle:@"确认" otherButtonTitles:nil, nil];
-        [al show];
+//        UIAlertView *al = [[UIAlertView alloc] initWithTitle:@"提示" message:theObj.object[@"msg"] delegate:self cancelButtonTitle:@"确认" otherButtonTitles:nil, nil];
+//        [al show];
+        [LCProgressHUD showSuccess:theObj.object[@"msg"]];
     }
-}
 
+}
+- (void)hideHUD {
+    
+    [LCProgressHUD hide];
+}
 @end
